@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{AuthController, ProductController, CategoryController, WishlistController, CartController, OrderController, ReviewController, AdminController, ChatController};
+use App\Http\Controllers\Api\{AuthController, ProductController, CategoryController, WishlistController, CartController, OrderController, ReviewController, AdminController, ChatController, TelegramBotController, ConsultationController};
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -50,6 +50,20 @@ Route::get('/products/{product:slug}', [ProductController::class, 'show']);
     Route::get('/orders/{id}',   [OrderController::class, 'show']);
     Route::post('/checkout',     [OrderController::class, 'checkout']);
     Route::post('/orders/{id}/cancel', [OrderController::class, 'cancel']);
+
+    // Consultation routes (customer)
+    Route::get('/consultation', [ConsultationController::class, 'getOrCreateConsultation']);
+    Route::post('/consultation/message', [ConsultationController::class, 'sendMessage']);
+    Route::get('/consultations', [ConsultationController::class, 'myConsultations']);
+});
+
+// Admin consultation routes
+Route::middleware(['auth:sanctum', 'admin.api'])->group(function () {
+    Route::get('/admin/consultations', [ConsultationController::class, 'adminConsultations']);
+    Route::get('/admin/consultations/{id}', [ConsultationController::class, 'adminConsultationDetail']);
+    Route::post('/admin/consultations/{id}/reply', [ConsultationController::class, 'adminReply']);
+    Route::post('/admin/consultations/{id}/complete', [ConsultationController::class, 'completeConsultation']);
+    Route::get('/admin/consultations/unread/count', [ConsultationController::class, 'unreadSellerRequests']);
 });
 
 // Admin chat routes
@@ -60,7 +74,18 @@ Route::middleware(['auth:sanctum', 'admin.api'])->group(function () {
     Route::post('/admin/chat/mark-read/{userId}', [ChatController::class, 'markAsRead']);
 });
 
-// Admin-only routes
+// Telegram bot webhook (no auth - Telegram calls this)
+Route::post('/telegram/webhook', [TelegramBotController::class, 'webhook']);
+
+// Telegram bot admin routes
+Route::middleware(['auth:sanctum', 'admin.api'])->group(function () {
+    Route::post('/telegram/set-webhook', [TelegramBotController::class, 'setWebhook']);
+    Route::post('/telegram/remove-webhook', [TelegramBotController::class, 'removeWebhook']);
+    Route::get('/telegram/webhook-info', [TelegramBotController::class, 'webhookInfo']);
+    Route::post('/telegram/send-message', [TelegramBotController::class, 'sendMessage']);
+});
+
+    // Admin-only routes
 Route::middleware(['auth:sanctum', 'admin.api'])->group(function () {
     Route::post('/products',         [ProductController::class, 'store']);
     Route::put('/products/{id}',     [ProductController::class, 'update']);
