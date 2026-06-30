@@ -2,13 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{AdminAuthController, DashboardController, CategoryController, ProductController as AdminProductController, OrderController as AdminOrderController, CustomerController, ReviewController};
+use App\Http\Controllers\Api\GoogleAuthController;
+
 
 Route::get('/', function () {
     return redirect()->route('admin.login');
 });
 
+// Google OAuth (requires session middleware)
+Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect']);
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
+
 Route::prefix('admin')->name('admin.')->group(function () {
+
     Route::get('/login',  [AdminAuthController::class, 'showLogin'])->name('login');
+    Route::get('/register', [AdminAuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AdminAuthController::class, 'register'])->name('register.post');
     Route::post('/login', [AdminAuthController::class, 'login'])->name('login.post');
 
     Route::middleware(['auth', 'admin'])->group(function () {

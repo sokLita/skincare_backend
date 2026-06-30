@@ -59,7 +59,7 @@
                             {{ ucfirst($order->status) }}
                         </span>
                     </td>
-                    <td class="px-4 py-2">{{ $order->orderItems->count() }} items</td>
+                    <td class="px-4 py-2">{{ $order->items->count() }} items</td>
                 </tr>
                 @empty
                 <tr>

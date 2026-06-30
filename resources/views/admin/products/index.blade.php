@@ -4,8 +4,8 @@
 
 @section('content')
 <div class="mb-6">
-    <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Add New Product
+    <a href="{{ route('admin.products.create') }}" class="btn btn-primary inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
+        <i class="fas fa-plus mr-2"></i> Add New Product
     </a>
 </div>
 

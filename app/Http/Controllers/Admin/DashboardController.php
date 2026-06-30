@@ -12,7 +12,7 @@ class DashboardController extends Controller
             'totalProducts'  => Product::count(),
             'totalOrders'    => Order::count(),
             'totalUsers'     => User::where('is_admin', false)->count(),
-            'totalRevenue'   => Order::where('status', 'completed')->sum('total_amount'),
+            'totalRevenue'   => Order::whereIn('status', ['pending', 'processing', 'shipped', 'delivered'])->sum('total_amount'),
             'recentOrders'   => Order::with('user')->latest()->take(5)->get(),
         ]);
     }

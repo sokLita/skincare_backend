@@ -6,14 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
     public function index() {
-        return response()->json(Cache::remember('categories', 3600, function () {
-            return Category::withCount('products')->get();
-        }));
+        return response()->json(Category::withCount('products')->get());
     }
 
     public function store(Request $request) {

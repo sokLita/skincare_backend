@@ -13,8 +13,21 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias(['admin' => \App\Http\Middleware\AdminMiddleware::class]);
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'admin.api' => \App\Http\Middleware\ApiAdminMiddleware::class
+        ]);
         $middleware->statefulApi();
+        
+        // Enable CORS for API routes using Laravel's built-in CORS
+        $middleware->api(prepend: [
+            \Illuminate\Http\Middleware\HandleCors::class,
+        ]);
+
+        // Exclude admin register route from CSRF verification
+        $middleware->validateCsrfTokens(except: [
+            'admin/register',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

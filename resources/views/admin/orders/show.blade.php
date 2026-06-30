@@ -35,7 +35,8 @@
                             <select name="status" class="form-select rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
                                 <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
-                                <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
+                                <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Shipped</option>
+                                <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
                                 <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                             </select>
                             <button type="submit" class="btn btn-primary">
@@ -98,7 +99,7 @@
         <div class="flex justify-end">
             <div class="text-right">
                 <p class="text-sm text-gray-600">Total Amount</p>
-                <p class="text-2xl font-bold text-gray-800">${{ number_format($order->total, 2) }}</p>
+                <p class="text-2xl font-bold text-gray-800">${{ number_format($order->total_amount, 2) }}</p>
             </div>
         </div>
     </div>

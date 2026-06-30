@@ -4,8 +4,9 @@
 
 @section('content')
 <div class="mb-6">
-    <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Add New Category
+    <a href="{{ route('admin.categories.create') }}" class="inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-200">
+        <i class="fas fa-plus mr-2"></i>
+        Add New Category
     </a>
 </div>
 

@@ -15,6 +15,14 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'phone',
+        'address',
+        'profile_photo',
+        'avatar',
+        'provider',
+        'provider_id',
+'google_id',
+        'role',
     ];
 
     protected $hidden = [
@@ -24,5 +32,13 @@ class User extends Authenticatable
 
     public function orders() {
         return $this->hasMany(Order::class);
+    }
+
+    public function wishlist() {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function cart() {
+        return $this->hasMany(Cart::class);
     }
 }

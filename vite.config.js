@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
@@ -23,20 +22,3 @@ export default defineConfig({
         },
     },
 });
-=======
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-
-export default defineConfig({
-  plugins: [vue()],
-  server: {
-    port: 3000,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8000',
-        changeOrigin: true
-      }
-    }
-  }
-})
->>>>>>> 4ee53aa6b9f0eaebb91d8f72f12617fc9b5ee8ff

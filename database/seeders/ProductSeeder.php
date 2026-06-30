@@ -10,34 +10,51 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create categories
+        // Create skincare categories
         $categories = [
-            ['name' => 'Electronics', 'slug' => 'electronics', 'description' => 'Electronic devices and gadgets'],
-            ['name' => 'Clothing', 'slug' => 'clothing', 'description' => 'Fashion and apparel'],
-            ['name' => 'Books', 'slug' => 'books', 'description' => 'Books and literature'],
-            ['name' => 'Home & Garden', 'slug' => 'home-garden', 'description' => 'Home improvement and garden supplies'],
-            ['name' => 'Sports', 'slug' => 'sports', 'description' => 'Sports equipment and accessories'],
+            ['name' => 'Cleansers', 'slug' => 'cleansers', 'description' => 'Gentle facial cleansers for all skin types', 'image' => 'categories/cleansers.jpg'],
+            ['name' => 'Moisturizers', 'slug' => 'moisturizers', 'description' => 'Hydrating moisturizers and creams', 'image' => 'categories/moisturizers.jpg'],
+            ['name' => 'Serums', 'slug' => 'serums', 'description' => 'Concentrated serums for targeted treatment', 'image' => 'categories/serums.jpg'],
+            ['name' => 'Sunscreen', 'slug' => 'sunscreen', 'description' => 'SPF protection for daily use', 'image' => 'categories/sunscreen.jpg'],
+            ['name' => 'Masks', 'slug' => 'masks', 'description' => 'Face masks for deep cleansing and hydration', 'image' => 'categories/masks.jpg'],
         ];
 
-        // Get or create categories and store their IDs
         $categoryIds = [];
         foreach ($categories as $category) {
             $cat = Category::updateOrCreate(['slug' => $category['slug']], $category);
             $categoryIds[$category['slug']] = $cat->id;
         }
 
-        // Create products using actual category IDs
+        // Create skincare products
         $products = [
-            ['name' => 'Wireless Headphones', 'category_slug' => 'electronics', 'price' => 79.99, 'stock' => 50, 'description' => 'High-quality wireless headphones with noise cancellation'],
-            ['name' => 'Smartphone', 'category_slug' => 'electronics', 'price' => 699.99, 'stock' => 30, 'description' => 'Latest smartphone with advanced features'],
-            ['name' => 'Laptop', 'category_slug' => 'electronics', 'price' => 1299.99, 'stock' => 20, 'description' => 'Powerful laptop for work and gaming'],
-            ['name' => 'T-Shirt', 'category_slug' => 'clothing', 'price' => 19.99, 'stock' => 100, 'description' => 'Comfortable cotton t-shirt'],
-            ['name' => 'Jeans', 'category_slug' => 'clothing', 'price' => 49.99, 'stock' => 75, 'description' => 'Classic fit denim jeans'],
-            ['name' => 'Novel Book', 'category_slug' => 'books', 'price' => 14.99, 'stock' => 200, 'description' => 'Bestselling fiction novel'],
-            ['name' => 'Cookbook', 'category_slug' => 'books', 'price' => 24.99, 'stock' => 60, 'description' => 'Delicious recipes for home cooking'],
-            ['name' => 'Garden Tools Set', 'category_slug' => 'home-garden', 'price' => 39.99, 'stock' => 40, 'description' => 'Complete set of garden tools'],
-            ['name' => 'Basketball', 'category_slug' => 'sports', 'price' => 29.99, 'stock' => 80, 'description' => 'Official size basketball'],
-            ['name' => 'Yoga Mat', 'category_slug' => 'sports', 'price' => 19.99, 'stock' => 120, 'description' => 'Non-slip yoga mat for exercise'],
+            // Cleansers
+            ['name' => 'Gentle Foaming Cleanser', 'category_slug' => 'cleansers', 'price' => 28.00, 'old_price' => 35.00, 'stock' => 50, 'description' => 'A mild, sulfate-free foaming cleanser that removes impurities without stripping the skin of its natural moisture. Infused with green tea and chamomile.'],
+            ['name' => 'Oil-Based Makeup Remover', 'category_slug' => 'cleansers', 'price' => 32.00, 'old_price' => null, 'stock' => 40, 'description' => 'Dissolves even waterproof makeup effortlessly. Formulated with jojoba oil and vitamin E to nourish while cleansing.'],
+            ['name' => 'Hydrating Cream Cleanser', 'category_slug' => 'cleansers', 'price' => 26.00, 'old_price' => 32.00, 'stock' => 35, 'description' => 'A rich, creamy cleanser that hydrates while gently cleansing. Perfect for dry and sensitive skin types.'],
+            ['name' => 'Exfoliating Face Wash', 'category_slug' => 'cleansers', 'price' => 30.00, 'old_price' => null, 'stock' => 45, 'description' => 'Gentle physical exfoliation with fine jojoba beads. Removes dead skin cells for a brighter, smoother complexion.'],
+
+            // Moisturizers
+            ['name' => 'Daily Hydrating Moisturizer', 'category_slug' => 'moisturizers', 'price' => 45.00, 'old_price' => 55.00, 'stock' => 60, 'description' => 'Lightweight yet deeply hydrating daily moisturizer with hyaluronic acid and ceramides. Restores the skin barrier.'],
+            ['name' => 'Night Repair Cream', 'category_slug' => 'moisturizers', 'price' => 58.00, 'old_price' => 72.00, 'stock' => 30, 'description' => 'Rich overnight cream with retinol and peptides. Works while you sleep to reduce fine lines and improve elasticity.'],
+            ['name' => 'Mattifying Gel Moisturizer', 'category_slug' => 'moisturizers', 'price' => 38.00, 'old_price' => null, 'stock' => 55, 'description' => 'Oil-free gel moisturizer that controls shine and minimizes pores. Ideal for oily and combination skin.'],
+            ['name' => 'Barrier Repair Balm', 'category_slug' => 'moisturizers', 'price' => 42.00, 'old_price' => null, 'stock' => 25, 'description' => 'Intensive balm for compromised skin barriers. Packed with panthenol, shea butter, and omega fatty acids.'],
+
+            // Serums
+            ['name' => 'Vitamin C Brightening Serum', 'category_slug' => 'serums', 'price' => 52.00, 'old_price' => 65.00, 'stock' => 40, 'description' => 'Stabilized 15% vitamin C serum with ferulic acid and vitamin E. Brightens dark spots and evens skin tone.'],
+            ['name' => 'Hyaluronic Acid Plumping Serum', 'category_slug' => 'serums', 'price' => 48.00, 'old_price' => 60.00, 'stock' => 55, 'description' => 'Triple-weight hyaluronic acid serum that delivers hydration to multiple layers of the skin for a plump, dewy look.'],
+            ['name' => 'Niacinamide 10% + Zinc Serum', 'category_slug' => 'serums', 'price' => 36.00, 'old_price' => null, 'stock' => 65, 'description' => 'High-potency niacinamide serum that reduces pores, controls oil, and improves skin texture. Suitable for all skin types.'],
+            ['name' => 'Retinol Anti-Aging Serum', 'category_slug' => 'serums', 'price' => 62.00, 'old_price' => 78.00, 'stock' => 35, 'description' => 'Encapsulated retinol serum for gradual release. Reduces fine lines, wrinkles, and uneven texture with minimal irritation.'],
+
+            // Sunscreen
+            ['name' => 'Mineral SPF 50 Sunscreen', 'category_slug' => 'sunscreen', 'price' => 34.00, 'old_price' => 42.00, 'stock' => 45, 'description' => 'Zinc oxide-based mineral sunscreen with a subtle tint. Provides broad-spectrum protection without white cast.'],
+            ['name' => 'Lightweight Daily SPF 30', 'category_slug' => 'sunscreen', 'price' => 28.00, 'old_price' => null, 'stock' => 70, 'description' => 'Feather-light chemical sunscreen for daily wear. Absorbs quickly with zero greasy residue. Perfect under makeup.'],
+            ['name' => 'Water Resistant SPF 50+', 'category_slug' => 'sunscreen', 'price' => 38.00, 'old_price' => null, 'stock' => 40, 'description' => 'Water-resistant sunscreen for active lifestyles. Provides 80 minutes of protection while swimming or sweating.'],
+
+            // Masks
+            ['name' => 'Clay Detox Face Mask', 'category_slug' => 'masks', 'price' => 32.00, 'old_price' => 40.00, 'stock' => 50, 'description' => 'Purifying kaolin clay mask with charcoal and tea tree oil. Draws out impurities and excess oil for clearer skin.'],
+            ['name' => 'Hydrating Sheet Mask (5 Pack)', 'category_slug' => 'masks', 'price' => 22.00, 'old_price' => null, 'stock' => 80, 'description' => 'Set of 5 hydrogel sheet masks soaked in hyaluronic acid and aloe vera. Instant hydration boost for dull skin.'],
+            ['name' => 'Brightening Turmeric Mask', 'category_slug' => 'masks', 'price' => 36.00, 'old_price' => 45.00, 'stock' => 30, 'description' => 'Turmeric and yogurt-based mask that brightens and evens skin tone. Reduces hyperpigmentation with regular use.'],
+            ['name' => 'Overnight Hydra-Gel Mask', 'category_slug' => 'masks', 'price' => 42.00, 'old_price' => null, 'stock' => 35, 'description' => 'Leave-on gel mask that provides intense hydration overnight. Wake up to plump, glowing skin.'],
         ];
 
         foreach ($products as $product) {
@@ -46,6 +63,7 @@ class ProductSeeder extends Seeder
                 'slug' => Str::slug($product['name']),
                 'category_id' => $categoryIds[$product['category_slug']],
                 'price' => $product['price'],
+                'old_price' => $product['old_price'],
                 'stock' => $product['stock'],
                 'description' => $product['description'],
                 'is_active' => true,
