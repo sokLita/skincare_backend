@@ -13,7 +13,16 @@
     <table class="min-w-full table-auto">
         <thead>
             <tr class="bg-gradient-to-r from-gray-50 to-gray-100">
-                <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">ID</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                    <a href="{{ route('admin.products.index', ['sort_by' => 'id', 'sort_dir' => request('sort_by') === 'id' && request('sort_dir') === 'asc' ? 'desc' : 'asc']) }}" style="text-decoration: none; color: inherit; cursor: pointer;">
+                        ID
+                        @if(request('sort_by') === 'id')
+                            <span style="font-size: 0.75rem; margin-left: 2px;">{{ request('sort_dir') === 'asc' ? '↑' : '↓' }}</span>
+                        @else
+                            <span style="font-size: 0.75rem; margin-left: 2px; opacity: 0.3;">↑</span>
+                        @endif
+                    </a>
+                </th>
                 <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Image</th>
                 <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Name</th>
                 <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Category</th>

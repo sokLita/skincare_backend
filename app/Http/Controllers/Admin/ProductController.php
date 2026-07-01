@@ -10,7 +10,21 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function index()    { return view('admin.products.index', ['products' => Product::with('category')->latest()->paginate(15)]); }
+    public function index(Request $request) {
+        $sortBy = $request->query('sort_by', 'id');
+        $sortDir = $request->query('sort_dir', 'asc');
+
+        // Validate to prevent SQL injection
+        $sortBy = in_array($sortBy, ['id']) ? $sortBy : 'id';
+        $sortDir = $sortDir === 'desc' ? 'desc' : 'asc';
+
+        return view('admin.products.index', [
+            'products' => Product::with('category')
+                ->orderBy($sortBy, $sortDir)
+                ->paginate(15)
+                ->withQueryString(),
+        ]);
+    }
     public function create()   { return view('admin.products.form', ['product' => new Product(), 'categories' => Category::all()]); }
 
     public function store(Request $r) {
