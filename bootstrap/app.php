@@ -24,9 +24,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\HandleCors::class,
         ]);
 
-        // Exclude admin register route from CSRF verification
+        // Exclude routes from CSRF verification
         $middleware->validateCsrfTokens(except: [
             'admin/register',
+            'api/telegram/webhook',  // Telegram webhook (no CSRF token available)
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

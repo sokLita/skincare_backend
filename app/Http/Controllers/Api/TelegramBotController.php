@@ -4,16 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\TelegramBotService;
+use App\Services\AISkincareService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class TelegramBotController extends Controller
 {
     protected TelegramBotService $botService;
+    protected AISkincareService $aiService;
 
-    public function __construct(TelegramBotService $botService)
+    public function __construct(TelegramBotService $botService, AISkincareService $aiService)
     {
         $this->botService = $botService;
+        $this->aiService = $aiService;
     }
 
     /**
