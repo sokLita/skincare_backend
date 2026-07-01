@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{AuthController, ProductController, CategoryController, WishlistController, CartController, OrderController, ReviewController, AdminController, ChatController, TelegramBotController, ConsultationController};
+use App\Http\Controllers\Api\{AuthController, ProductController, CategoryController, WishlistController, CartController, OrderController, ReviewController, AdminController, ChatController, TelegramBotController, ConsultationController, ChatbotController};
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -27,6 +27,12 @@ Route::get('/products/{product:slug}', [ProductController::class, 'show']);
         Route::post('/chat/messages', [ChatController::class, 'sendMessage']);
         Route::get('/chat/unread', [ChatController::class, 'unreadCount']);
         Route::post('/chat/mark-read', [ChatController::class, 'markCustomerRead']);
+
+        // Order Chatbot routes
+        Route::get('/chatbot/order/{orderId}', [ChatbotController::class, 'orderStatus']);
+        Route::get('/chatbot/my-orders', [ChatbotController::class, 'myOrders']);
+        Route::post('/chatbot/query', [ChatbotController::class, 'query']);
+        Route::post('/chatbot/confirm-receipt', [ChatbotController::class, 'confirmReceipt']);
     });
 
     // Customer-only routes

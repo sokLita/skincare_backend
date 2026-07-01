@@ -33,5 +33,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::resource('/customers', CustomerController::class)->only(['index', 'show', 'destroy']);
         Route::resource('/reviews', ReviewController::class)->only(['index', 'show', 'destroy']);
+
+        // Inline order status update (AJAX)
+        Route::put('/orders/{order}/status-api', [AdminOrderController::class, 'updateStatusApi'])->name('orders.status-api');
     });
 });

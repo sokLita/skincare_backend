@@ -106,6 +106,7 @@
     .orders-table-wrap {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
     }
 
     .orders-table {
@@ -149,7 +150,7 @@
     }
 
     .orders-table tbody td {
-        padding: 16px 22px;
+        padding: 18px 22px;
         vertical-align: middle;
         color: #334155;
         font-size: 0.85rem;
@@ -374,6 +375,25 @@
         margin-bottom: 4px;
     }
 
+    /* ─── Filter Tabs ─── */
+    .filter-tab:hover {
+        opacity: 0.85;
+        transform: translateY(-1px);
+    }
+
+    /* ─── Actions cell with flex layout ─── */
+    .actions-cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 54px;
+    }
+
+    .actions-cell .btn-action-view {
+        flex-shrink: 0;
+    }
+
     /* ─── Responsive Mobile ─── */
     @media (max-width: 767.98px) {
         .orders-toolbar {
@@ -416,10 +436,31 @@
     <!-- Toolbar -->
     <div class="orders-toolbar">
         <div>
-            <h2 class="page-title">
-                <i class="fas fa-shopping-cart mr-2" style="color: #6366f1;"></i>Orders
+            <h2 class="page-title">                            <i class="fas fa-shopping-cart mr-2" style="color: #b8456a;"></i>Orders
             </h2>
             <p class="page-subtitle">View and manage all customer orders</p>
+
+            <!-- Filter Tabs -->
+            <div class="filter-tabs" style="margin-top: 14px; margin-bottom: 24px; display: flex; gap: 14px; flex-wrap: wrap;">
+                <a href="{{ route('admin.orders.index') }}"
+                   class="filter-tab {{ !$currentFilter ? 'active' : '' }}"
+                   style="padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
+                          {{ !$currentFilter ? 'background: #b8456a; color: #fff;' : 'background: #fdf2f6; color: #7a1f3d;' }}">
+                    All Orders
+                </a>
+                <a href="{{ route('admin.orders.index', ['filter' => 'pending']) }}"
+                   class="filter-tab {{ $currentFilter === 'pending' ? 'active' : '' }}"
+                   style="padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
+                          {{ $currentFilter === 'pending' ? 'background: #b8456a; color: #fff;' : 'background: #fdf2f6; color: #7a1f3d;' }}">
+                    <span>⏳</span> Pending
+                </a>
+                <a href="{{ route('admin.orders.index', ['filter' => 'completed']) }}"
+                   class="filter-tab {{ $currentFilter === 'completed' ? 'active' : '' }}"
+                   style="padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;
+                          {{ $currentFilter === 'completed' ? 'background: #b8456a; color: #fff;' : 'background: #fdf2f6; color: #7a1f3d;' }}">
+                    <span>✅</span> Completed
+                </a>
+            </div>
         </div>
         <div class="orders-search">
             <div class="search-wrapper">
@@ -493,6 +534,11 @@
                             <span class="dot"></span>
                             {{ ucfirst($order->status) }}
                         </span>
+                        @if($order->status_history && collect($order->status_history)->contains('note', 'customer_confirmation'))
+                            <span class="customer-confirmed-badge" style="display: block; margin-top: 4px; font-size: 0.65rem; color: #16a34a; font-weight: 600; white-space: nowrap;">
+                                ✅ Confirmed by customer
+                            </span>
+                        @endif
                     </td>
                     <td>
                         <span class="cell-date">
@@ -500,7 +546,7 @@
                             {{ $order->created_at->format('M d, Y') }}
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center actions-cell">
                         <a href="{{ route('admin.orders.show', $order) }}"
                            class="btn-action-view"
                            data-tooltip="View Order"
@@ -558,5 +604,10 @@
         // Placeholder for future filter panel
         // Could expand into a dropdown or slide-out panel
     }
+
+    // Add toast animation keyframes (kept for future use)
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `@keyframes toastIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`;
+    document.head.appendChild(styleSheet);
 </script>
 @endsection
